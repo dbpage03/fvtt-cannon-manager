@@ -1,0 +1,15 @@
+{
+  "id": "fvtt-cannon-manager",
+  "title": "FVTT Cannon Manager",
+  "description": "Foundry VTT module for tracking and managing cannons.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "David Page"
+    }
+  ]
+}
