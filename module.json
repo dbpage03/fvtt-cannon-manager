@@ -1,5 +1,5 @@
 {
-  "id": "cannon-tracker",
+  "id": "fvtt-cannon-manager",
   "title": "Cannon Tracker",
   "description": "Track cannon loading state, ammo usage, and cannon attack rolls.",
   "version": "1.0.0",
@@ -17,8 +17,5 @@
   ],
   "styles": [
     "styles/cannon-tracker.css"
-  ],
-  "templates": [
-    "templates/cannon-hud.hbs"
   ]
 }

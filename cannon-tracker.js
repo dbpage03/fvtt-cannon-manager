@@ -1,4 +1,4 @@
-const MODULE_ID = "cannon-tracker";
+const MODULE_ID = "fvtt-cannon-manager";
 const MAX_CANNONS = 30;
 const DEFAULT_CANNON_COUNT = 3;
 
@@ -166,6 +166,8 @@ function nextCannonId(cannons) {
 }
 
 Hooks.once("init", () => {
+  loadTemplates([`modules/${MODULE_ID}/templates/cannon-hud.hbs`]);
+
   game.settings.register(MODULE_ID, "cannonData", {
     scope: "world",
     config: false,
@@ -433,8 +435,8 @@ class CannonTrackerApp extends Application {
 
     cannon.loaded = false;
     await this._saveContext(context, state);
-    await this._postAttackRoll(cannon, this._findProfile(state, cannon), context.vehicleActor);
     this.render(false);
+    await this._postAttackRoll(cannon, this._findProfile(state, cannon), context.vehicleActor);
   }
 
   async _reloadAll() {
@@ -561,7 +563,6 @@ class CannonTrackerApp extends Application {
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ alias: "Cannon Tracker" }),
       content,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       rolls: [attackRoll, damageRoll]
     });
   }
