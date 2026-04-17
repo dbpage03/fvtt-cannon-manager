@@ -550,11 +550,12 @@ class CannonTrackerApp extends Application {
     const attackRoll = await new Roll(profile.attackFormula).evaluate();
     const damageRoll = await new Roll(profile.damageFormula).evaluate();
 
-    const actorLabel = vehicleActor ? ` (${foundry.utils.escapeHTML(vehicleActor.name)})` : "";
+    const escape = (s) => Handlebars.Utils.escapeExpression(s);
+    const actorLabel = vehicleActor ? ` (${escape(vehicleActor.name)})` : "";
     const content = `
       <div class="cannon-roll-chat">
-        <h3>🔥 ${foundry.utils.escapeHTML(cannon.name)} fired${actorLabel}</h3>
-        <p><strong>Profile:</strong> ${foundry.utils.escapeHTML(profile.name)}</p>
+        <h3>🔥 ${escape(cannon.name)} fired${actorLabel}</h3>
+        <p><strong>Profile:</strong> ${escape(profile.name)}</p>
         <p><strong>Attack:</strong> ${attackRoll.total} <span class="formula">(${attackRoll.formula})</span></p>
         <p><strong>Damage:</strong> ${damageRoll.total} <span class="formula">(${damageRoll.formula})</span></p>
       </div>

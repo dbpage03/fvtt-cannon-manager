@@ -4,8 +4,8 @@
   "description": "Track cannon loading state, ammo usage, and cannon attack rolls.",
   "version": "1.0.0",
   "compatibility": {
-    "minimum": "11",
-    "verified": "12"
+    "minimum": "12",
+    "verified": "14"
   },
   "authors": [
     {
