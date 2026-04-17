@@ -15,7 +15,7 @@
     {{#each cannons}}
       <section class="cannon-card {{#unless enabled}}is-disabled{{/unless}}">
         <h4>{{name}}</h4>
-        <p class="status {{#if loaded}}loaded{{else}}empty{{/if}}">
+        <p class="status {{#if loaded}}loaded{{else}}unloaded{{/if}}">
           {{#if loaded}}Loaded{{else}}Unloaded{{/if}}
         </p>
         <div class="actions">
