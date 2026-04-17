@@ -15,8 +15,12 @@ function defaultProfiles() {
   ];
 }
 
-function defaultCannons(count = DEFAULT_CANNON_COUNT, profileId = "standard-shot") {
-  return Array.from({ length: Math.min(MAX_CANNONS, Math.max(1, count)) }, (_, index) => ({
+function defaultProfileId() {
+  return defaultProfiles()[0].id;
+}
+
+function defaultCannons(cannonCount = DEFAULT_CANNON_COUNT, profileId = defaultProfileId()) {
+  return Array.from({ length: Math.min(MAX_CANNONS, Math.max(0, cannonCount)) }, (_, index) => ({
     id: index + 1,
     name: `Cannon ${index + 1}`,
     enabled: true,
@@ -32,8 +36,9 @@ function normalizeProfiles(data) {
 
   const normalized = source
     .map((entry, index) => {
-      const idSeed = typeof entry?.id === "string" && entry.id.trim() ? entry.id.trim() : `profile-${index + 1}`;
-      const id = taken.has(idSeed) ? `${idSeed}-${index + 1}` : idSeed;
+      const candidateId =
+        typeof entry?.id === "string" && entry.id.trim() ? entry.id.trim() : `profile-${index + 1}`;
+      const id = taken.has(candidateId) ? `${candidateId}-${index + 1}` : candidateId;
       taken.add(id);
 
       return {
@@ -51,7 +56,7 @@ function normalizeProfiles(data) {
         powderCost: normalizeNumber(entry?.powderCost, 1)
       };
     })
-    .slice(0, 30);
+    .slice(0, MAX_CANNONS);
 
   return normalized.length ? normalized : fallback;
 }
@@ -77,7 +82,8 @@ function normalizeCannons(data, profiles) {
 function normalizeNumber(value, fallback = 0) {
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) return fallback;
-  return Math.max(0, Math.floor(numeric));
+  const normalized = Math.floor(numeric);
+  return normalized < 0 ? 0 : normalized;
 }
 
 function normalizeState(state) {
@@ -148,6 +154,17 @@ function cloneState(state) {
   };
 }
 
+function nextProfileId(profiles) {
+  const used = new Set(profiles.map((profile) => profile.id));
+  let index = 1;
+  while (used.has(`profile-${index}`)) index += 1;
+  return `profile-${index}`;
+}
+
+function nextCannonId(cannons) {
+  return cannons.reduce((max, cannon) => Math.max(max, cannon.id), 0) + 1;
+}
+
 Hooks.once("init", () => {
   game.settings.register(MODULE_ID, "cannonData", {
     scope: "world",
@@ -181,24 +198,6 @@ Hooks.once("init", () => {
     type: Number,
     default: 100,
     onChange: () => cannonApp?.render(false)
-  });
-
-  game.settings.register(MODULE_ID, "attackFormula", {
-    name: "Attack Roll Formula (Legacy Default)",
-    hint: "Used as a fallback when creating the initial profile.",
-    scope: "world",
-    config: true,
-    type: String,
-    default: "1d20+5"
-  });
-
-  game.settings.register(MODULE_ID, "damageFormula", {
-    name: "Damage Formula (Legacy Default)",
-    hint: "Used as a fallback when creating the initial profile.",
-    scope: "world",
-    config: true,
-    type: String,
-    default: "4d10+5"
   });
 
   game.settings.register(MODULE_ID, "activeVehicleActorId", {
@@ -247,7 +246,7 @@ class CannonTrackerApp extends Application {
 
     return {
       source: context.source,
-      sourceLabel: context.vehicleActor ? context.vehicleActor.name : "World Storage",
+      sourceLabel: context.vehicleActor ? context.vehicleActor.name : "World Storage (unlinked)",
       vehicles,
       hasVehicles: vehicles.length > 0,
       cannonBalls: context.state.cannonBalls,
@@ -470,7 +469,7 @@ class CannonTrackerApp extends Application {
       return;
     }
 
-    const nextId = state.cannons.reduce((max, cannon) => Math.max(max, cannon.id), 0) + 1;
+    const nextId = nextCannonId(state.cannons);
     state.cannons.push({
       id: nextId,
       name: `Cannon ${nextId}`,
@@ -486,12 +485,12 @@ class CannonTrackerApp extends Application {
   async _addProfile() {
     const context = this._getContext();
     const state = cloneState(context.state);
-    const suffix = state.profiles.length + 1;
-    const newProfileId = `profile-${Date.now()}-${suffix}`;
+    const newProfileId = nextProfileId(state.profiles);
+    const profileLabel = newProfileId.replace("profile-", "");
 
     state.profiles.push({
       id: newProfileId,
-      name: `Profile ${suffix}`,
+      name: `Profile ${profileLabel}`,
       attackFormula: "1d20+5",
       damageFormula: "4d10+5",
       ballCost: 1,
