@@ -5,8 +5,8 @@ Foundry VTT module: **Cannon Tracker**
 ## Features
 
 - Tracks up to 30 cannons with loaded/unloaded and enabled/disabled state
-- Stores cannon + ammo data in world settings
-- Consumes 1 cannon ball and 1 powder charge per reload
-- Supports reload/fire actions for one cannon or all enabled cannons
-- Rolls attack and damage formulas on fire and posts results to chat
-- Adds a toolbar button to open the cannon HUD
+- Supports runtime cannon management (rename cannons and add cannons from the HUD)
+- Supports runtime-editable cannon profiles (attack/damage formulas and ammo costs)
+- Supports reload/fire per cannon and reload-all workflows
+- Stores data in world settings or binds to a selected vehicle actor via actor flags
+- Adds a toolbar button and vehicle actor-sheet button to open the cannon HUD
