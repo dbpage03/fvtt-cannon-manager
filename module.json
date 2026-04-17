@@ -1,0 +1,24 @@
+{
+  "id": "cannon-tracker",
+  "title": "Cannon Tracker",
+  "description": "Track cannon loading state, ammo usage, and cannon attack rolls.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "dbpage03"
+    }
+  ],
+  "esmodules": [
+    "cannon-tracker.js"
+  ],
+  "styles": [
+    "styles/cannon-tracker.css"
+  ],
+  "templates": [
+    "templates/cannon-hud.hbs"
+  ]
+}

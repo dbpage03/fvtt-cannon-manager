@@ -1,0 +1,83 @@
+.cannon-tracker-hud {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cannon-ammo-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.cannon-ammo-bar label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.cannon-ammo-bar input {
+  width: 7rem;
+}
+
+.cannon-counts {
+  font-weight: 600;
+}
+
+.cannon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  max-height: 60vh;
+  overflow: auto;
+}
+
+.cannon-card {
+  border: 1px solid var(--color-border-light-2, #999);
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.cannon-card.is-disabled {
+  opacity: 0.55;
+}
+
+.cannon-card h4 {
+  margin: 0;
+}
+
+.cannon-card .status {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.cannon-card .status.loaded {
+  color: #2b8a3e;
+}
+
+.cannon-card .status.empty {
+  color: #9c2f2f;
+}
+
+.cannon-card .actions {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.cannon-global-actions {
+  display: flex;
+  justify-content: end;
+  gap: 0.5rem;
+}
+
+.cannon-roll-chat ul {
+  margin: 0.25rem 0;
+  padding-left: 1rem;
+}
+
+.cannon-roll-chat .formula {
+  opacity: 0.75;
+  font-size: 0.85em;
+}

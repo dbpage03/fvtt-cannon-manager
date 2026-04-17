@@ -1,0 +1,34 @@
+<div class="cannon-tracker-hud">
+  <div class="cannon-ammo-bar">
+    <label>
+      Cannon Balls
+      <input id="cannon-balls-input" type="number" min="0" step="1" value="{{cannonBalls}}" />
+    </label>
+    <label>
+      Powder Charges
+      <input id="powder-charges-input" type="number" min="0" step="1" value="{{powderCharges}}" />
+    </label>
+    <span class="cannon-counts">Loaded: {{loadedCount}} / {{enabledCount}}</span>
+  </div>
+
+  <div class="cannon-grid">
+    {{#each cannons}}
+      <section class="cannon-card {{#unless enabled}}is-disabled{{/unless}}">
+        <h4>{{name}}</h4>
+        <p class="status {{#if loaded}}loaded{{else}}empty{{/if}}">
+          {{#if loaded}}Loaded{{else}}Unloaded{{/if}}
+        </p>
+        <div class="actions">
+          <button type="button" class="cannon-reload" data-cannon-id="{{id}}" {{#if loaded}}disabled{{/if}} {{#unless enabled}}disabled{{/unless}}>Reload</button>
+          <button type="button" class="cannon-fire" data-cannon-id="{{id}}" {{#unless loaded}}disabled{{/unless}} {{#unless enabled}}disabled{{/unless}}>Fire</button>
+          <button type="button" class="cannon-toggle-enabled" data-cannon-id="{{id}}">{{#if enabled}}Disable{{else}}Enable{{/if}}</button>
+        </div>
+      </section>
+    {{/each}}
+  </div>
+
+  <footer class="cannon-global-actions">
+    <button id="cannon-reload-all" type="button">Reload All</button>
+    <button id="cannon-fire-all" type="button">Fire All</button>
+  </footer>
+</div>
