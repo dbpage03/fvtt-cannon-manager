@@ -1,0 +1,90 @@
+<div class="cannon-tracker-hud">
+  <div class="cannon-source-bar">
+    <label class="vehicle-picker">
+      Vehicle Actor
+      <select id="vehicle-actor-select">
+        <option value="">World Storage (unlinked)</option>
+        {{#each vehicles}}
+          <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </label>
+    <span class="source-label">Active Source: {{sourceLabel}}</span>
+  </div>
+
+  <div class="cannon-ammo-bar">
+    <label>
+      Cannon Balls
+      <input id="cannon-balls-input" type="number" min="0" step="1" value="{{cannonBalls}}" />
+    </label>
+    <label>
+      Powder Charges
+      <input id="powder-charges-input" type="number" min="0" step="1" value="{{powderCharges}}" />
+    </label>
+    <span class="cannon-counts">Loaded: {{loadedCount}} / {{enabledCount}}</span>
+    <div class="action-group">
+      <button id="cannon-add" type="button" {{#unless canAddCannon}}disabled{{/unless}}>Add Cannon</button>
+      <button id="cannon-reload-all" type="button">Reload All</button>
+    </div>
+  </div>
+
+  <section class="cannon-profiles">
+    <div class="section-title-row">
+      <h3>Cannon Profiles</h3>
+      <button id="profile-add" type="button">Add Profile</button>
+    </div>
+
+    <div class="profile-grid profile-header" aria-hidden="true">
+      <span>Name</span>
+      <span>Attack</span>
+      <span>Damage</span>
+      <span>Balls</span>
+      <span>Powder</span>
+      <span></span>
+    </div>
+
+    {{#each profiles}}
+      <div class="profile-grid">
+        <input class="profile-input" data-profile-id="{{id}}" data-field="name" type="text" value="{{name}}" />
+        <input class="profile-input" data-profile-id="{{id}}" data-field="attackFormula" type="text" value="{{attackFormula}}" />
+        <input class="profile-input" data-profile-id="{{id}}" data-field="damageFormula" type="text" value="{{damageFormula}}" />
+        <input class="profile-input" data-profile-id="{{id}}" data-field="ballCost" type="number" min="0" step="1" value="{{ballCost}}" />
+        <input class="profile-input" data-profile-id="{{id}}" data-field="powderCost" type="number" min="0" step="1" value="{{powderCost}}" />
+        <button class="profile-remove" data-profile-id="{{id}}" type="button">Remove</button>
+      </div>
+    {{/each}}
+  </section>
+
+  <div class="cannon-grid">
+    {{#each cannons}}
+      <section class="cannon-card {{#unless enabled}}is-disabled{{/unless}}">
+        <input
+          class="cannon-name-input"
+          data-cannon-id="{{id}}"
+          type="text"
+          value="{{name}}"
+          aria-label="Name for {{name}}"
+        />
+
+        <label class="profile-select-label">
+          Profile
+          <select class="cannon-profile-select" data-cannon-id="{{id}}">
+            {{#each profileOptions}}
+              <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+            {{/each}}
+          </select>
+        </label>
+
+        <p class="status {{#if loaded}}loaded{{else}}unloaded{{/if}}">
+          {{#if loaded}}Loaded{{else}}Unloaded{{/if}}
+        </p>
+
+        <div class="actions">
+          <button type="button" class="cannon-reload" data-cannon-id="{{id}}" {{#if loaded}}disabled{{/if}} {{#unless enabled}}disabled{{/unless}}>Reload</button>
+          <button type="button" class="cannon-fire" data-cannon-id="{{id}}" {{#unless loaded}}disabled{{/unless}} {{#unless enabled}}disabled{{/unless}}>Fire</button>
+          <button type="button" class="cannon-toggle-enabled" data-cannon-id="{{id}}">{{#if enabled}}Disable{{else}}Enable{{/if}}</button>
+        </div>
+      </section>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,140 @@
+.cannon-tracker-hud {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.cannon-source-bar,
+.cannon-ammo-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.cannon-source-bar .source-label {
+  font-weight: 600;
+}
+
+.cannon-source-bar label,
+.cannon-ammo-bar label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.cannon-source-bar select,
+.cannon-ammo-bar input {
+  width: 12rem;
+}
+
+.cannon-ammo-bar input {
+  width: 7rem;
+}
+
+.cannon-counts {
+  font-weight: 600;
+}
+
+.action-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cannon-profiles {
+  border: 1px solid var(--color-border-light-2, #999);
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title-row h3 {
+  margin: 0;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 1.2fr 0.7fr 0.7fr auto;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.profile-header {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.profile-grid input {
+  width: 100%;
+}
+
+.cannon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 0.5rem;
+  max-height: 55vh;
+  overflow: auto;
+}
+
+.cannon-card {
+  border: 1px solid var(--color-border-light-2, #999);
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cannon-card.is-disabled {
+  opacity: 0.55;
+}
+
+.cannon-name-input,
+.cannon-profile-select {
+  width: 100%;
+}
+
+.profile-select-label {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.cannon-card .status {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.cannon-card .status.loaded {
+  color: #2b8a3e;
+}
+
+.cannon-card .status.unloaded {
+  color: #9c2f2f;
+}
+
+.cannon-card .actions {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.cannon-roll-chat {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.cannon-roll-chat h3,
+.cannon-roll-chat p {
+  margin: 0;
+}
+
+.cannon-roll-chat .formula {
+  opacity: 0.75;
+  font-size: 0.85em;
+}
