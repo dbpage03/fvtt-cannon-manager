@@ -4,8 +4,20 @@
   "description": "Track cannon loading state, ammo usage, and cannon attack rolls.",
   "version": "1.0.0",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "14",
     "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "requires",
+        "compatibility": {
+          "minimum": "5.0.0",
+          "verified": "5.x"
+        }
+      }
+    ]
   },
   "authors": [
     {

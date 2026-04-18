@@ -589,27 +589,42 @@ async function openCannonTracker({ actorId = "" } = {}) {
   cannonApp.render(true);
 }
 
+// Foundry v13+: controls is a record object, not an array; tools is also a record
 Hooks.on("getSceneControlButtons", (controls) => {
-  const tokenControls = controls.find((control) => control.name === "token");
-  if (!tokenControls) return;
+  if (!controls.token) return;
 
-  tokenControls.tools.push({
+  controls.token.tools["open-cannon-tracker"] = {
     name: "open-cannon-tracker",
     title: "Open Cannon Tracker",
     icon: "fas fa-bomb",
     button: true,
     onClick: () => openCannonTracker()
-  });
+  };
 });
 
-Hooks.on("getActorSheetHeaderButtons", (app, buttons) => {
-  const actor = app?.actor;
+// ApplicationV2 vehicle sheets (Foundry v14 / dnd5e 5.x)
+function _injectVehicleSheetButton(app, html) {
+  // html is HTMLElement for ApplicationV2, jQuery for ApplicationV1
+  const el = html instanceof HTMLElement ? html : html[0];
+  if (!el) return;
+  if (el.querySelector(".open-cannon-tracker")) return;
+
+  const actor = app.document ?? app.actor;
   if (!actor || actor.type !== "vehicle") return;
 
-  buttons.unshift({
-    label: "Cannons",
-    class: "open-cannon-tracker",
-    icon: "fas fa-bomb",
-    onclick: () => openCannonTracker({ actorId: actor.id })
-  });
-});
+  const header = el.querySelector(".application-header, .window-header");
+  if (!header) return;
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "header-button open-cannon-tracker";
+  btn.title = "Cannon Tracker";
+  btn.innerHTML = `<i class="fas fa-bomb"></i><span class="label">Cannons</span>`;
+  btn.addEventListener("click", () => openCannonTracker({ actorId: actor.id }));
+
+  const closeBtn = header.querySelector(".close, [data-action='close']");
+  if (closeBtn) header.insertBefore(btn, closeBtn);
+  else header.append(btn);
+}
+
+Hooks.on("renderVehicleSheet", _injectVehicleSheetButton);
